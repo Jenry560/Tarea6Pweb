@@ -1,0 +1,6 @@
+@Tarea6Pweb_HostAddress = http://localhost:5296
+
+GET {{Tarea6Pweb_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
