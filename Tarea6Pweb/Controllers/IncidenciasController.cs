@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tarea6Pweb.Models;
 using Tarea6Pweb.Models.Dtos;
+using Tarea6Pweb.Models.Response;
 
 namespace Tarea6Pweb.Controllers
 {
@@ -23,7 +24,7 @@ namespace Tarea6Pweb.Controllers
         [HttpPost]
         public async Task<ActionResult<Incidencia>> PostIncidencia(IncidenciasDto incidenciaDto)
         {
-            var response = new DataResponse<IncidenciasDto>();
+            var response = new DataResponse<int>();
             response.Success = false;
            
             try
@@ -31,12 +32,16 @@ namespace Tarea6Pweb.Controllers
                 var incidencia = _mapper.Map<Incidencia>(incidenciaDto);
                 _context.Incidencias.Add(incidencia);
                 await _context.SaveChangesAsync();
+                response.Success = true;
+                response.Message = "Incidencia registrada Exitosamente";
+                response.Result = incidencia.IncidenciaId;
+                return CreatedAtAction(nameof(PostIncidencia), new { id = incidenciaDto.IncidenciaId }, response);
             }
             catch (DbUpdateException)
             {
-                if (IncidenciaExists(incidenciaDto.Pasaporte))
+                if (!IncidenciaExistsCodigoAgente(incidenciaDto.CodigoAgente))
                 {
-                    response.Message = "Ya existe incidencia con ese pasaprote";
+                    response.Message = "No hay un agente con ese codigo";
                     return Conflict(response);
                 }
                 else
@@ -45,31 +50,14 @@ namespace Tarea6Pweb.Controllers
                     return BadRequest(response);
                 }
             }
-            response.Success = true;
-            response.Message = "Incidencia registrada Exitosamente";
-            response.Result = incidenciaDto;
-            return CreatedAtAction("GetIncidencia", new { id = incidenciaDto.Pasaporte }, response);
+        
         }
 
-        // DELETE: api/Incidencias/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteIncidencia(string id)
+
+
+        private bool IncidenciaExistsCodigoAgente(int id)
         {
-            var incidencia = await _context.Incidencias.FindAsync(id);
-            if (incidencia == null)
-            {
-                return NotFound();
-            }
-
-            _context.Incidencias.Remove(incidencia);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool IncidenciaExists(string id)
-        {
-            return _context.Incidencias.Any(e => e.Pasaporte == id);
+            return _context.Agentes.Any(e => e.AgenteId == id);
         }
     }
 }

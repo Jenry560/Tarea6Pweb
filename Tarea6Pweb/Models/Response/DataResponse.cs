@@ -1,4 +1,4 @@
-﻿namespace Tarea6Pweb.Models
+﻿namespace Tarea6Pweb.Models.Response
 {
     public class DataResponse<T>
     {

@@ -2,6 +2,7 @@
 {
     public class AgenteDto
     {
+        public int AgenteId { get; set; }
         public string Cedula { get; set; } = null!;
 
         public string Nombre { get; set; } = null!;

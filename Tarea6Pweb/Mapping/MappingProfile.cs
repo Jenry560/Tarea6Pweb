@@ -9,6 +9,7 @@ namespace Tarea6Pweb.Mapping
         public MappingProfile() {
 
             CreateMap<AgenteDto, Agente>().ReverseMap();
+            CreateMap<IncidenciasDto,Incidencia>().ReverseMap();
         }
                 
     }

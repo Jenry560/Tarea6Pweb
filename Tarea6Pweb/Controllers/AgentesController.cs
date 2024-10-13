@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Tarea6Pweb.Models;
 using Tarea6Pweb.Models.Dtos;
+using Tarea6Pweb.Models.Request;
+using Tarea6Pweb.Models.Response;
 
 namespace Tarea6Pweb.Controllers
 {
@@ -42,7 +44,7 @@ namespace Tarea6Pweb.Controllers
                 await _context.SaveChangesAsync();
                 response.Success = true;
                 response.Message = "Agente Registrado Correctamente";
-                response.Result = agenteDto;
+                response.Result = _mapper.Map<AgenteDto>(agente);
                 return CreatedAtAction(nameof(RegitrarAgente), new { id = agente.Cedula }, response);
             }
             catch (Exception ex)

@@ -18,18 +18,19 @@ public partial class PruebaDbContext : DbContext
 
     public virtual DbSet<Incidencia> Incidencias { get; set; }
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Agente>(entity =>
         {
-            entity.HasKey(e => e.Cedula).HasName("PK__Agentes__B4ADFE39F634ED7B");
+            entity.HasKey(e => e.AgenteId).HasName("PK__Agentes__EA09D85D4471E64A");
 
-            entity.Property(e => e.Cedula)
-                .HasMaxLength(15)
-                .IsUnicode(false);
+            entity.HasIndex(e => e.Cedula, "UQ__Agentes__B4ADFE38AC221594").IsUnique();
+
             entity.Property(e => e.Apellido)
                 .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Cedula)
+                .HasMaxLength(15)
                 .IsUnicode(false);
             entity.Property(e => e.ClaveAgente)
                 .HasMaxLength(255)
@@ -47,21 +48,18 @@ public partial class PruebaDbContext : DbContext
 
         modelBuilder.Entity<Incidencia>(entity =>
         {
-            entity.HasKey(e => e.Pasaporte).HasName("PK__Incidenc__4060B31BAB5B52B1");
+            entity.HasKey(e => e.IncidenciaId).HasName("PK__Incidenc__E41133E63DBE358E");
 
-            entity.Property(e => e.Pasaporte)
-                .HasMaxLength(20)
-                .IsUnicode(false);
             entity.Property(e => e.Apellido)
                 .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.CodigoAgente)
-                .HasMaxLength(15)
                 .IsUnicode(false);
             entity.Property(e => e.Latitud).HasColumnType("decimal(10, 8)");
             entity.Property(e => e.Longitud).HasColumnType("decimal(11, 8)");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Pasaporte)
+                .HasMaxLength(20)
                 .IsUnicode(false);
             entity.Property(e => e.WhatsApp)
                 .HasMaxLength(20)
@@ -69,7 +67,7 @@ public partial class PruebaDbContext : DbContext
 
             entity.HasOne(d => d.CodigoAgenteNavigation).WithMany(p => p.Incidencia)
                 .HasForeignKey(d => d.CodigoAgente)
-                .HasConstraintName("FK__Incidenci__Codig__4BAC3F29");
+                .HasConstraintName("FK__Incidenci__Codig__571DF1D5");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -2,6 +2,7 @@
 {
     public class IncidenciasDto
     {
+        public int IncidenciaId { get; set; }
         public string Pasaporte { get; set; } = null!;
 
         public string Nombre { get; set; } = null!;
@@ -16,6 +17,6 @@
 
         public decimal? Longitud { get; set; }
 
-        public string? CodigoAgente { get; set; }
+        public int CodigoAgente { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Tarea6Pweb.Models.Dtos
+﻿namespace Tarea6Pweb.Models.Request
 {
     public class LoginAgenteDto
     {
