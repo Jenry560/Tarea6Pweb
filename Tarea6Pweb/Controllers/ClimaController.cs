@@ -24,10 +24,20 @@ namespace Tarea6Pweb.Controllers
 
 
         /// <summary>
-        /// Obtiene información del clima de los proximo 7 dias basado en la latitud y longitud.
+        /// Obtiene la información del clima para los próximos 7 días, basada en la latitud y longitud proporcionadas.
+        /// Realiza una solicitud a una API externa para recuperar los datos climáticos.
         /// </summary>
-        /// <param name="latitudLogitud">Latitud y longitud separadas por una coma (ejemplo: '34.0522,-118.2437').</param>
-        /// <returns>Información del clima.</returns>
+        /// <param name="latitudLogitud">
+        /// Cadena que contiene la latitud y longitud separadas por una coma (por ejemplo: '34.0522,-118.2437').
+        /// </param>
+        /// <returns>
+        /// Un objeto <see cref="IActionResult"/> que incluye un objeto <see cref="DataResponse{Clima}"/> con la información del clima,
+        /// junto con un estado de éxito o error.
+        /// </returns>
+        /// <response code="200">Retorna la información del clima obtenida con éxito.</response>
+        /// <response code="400">Solicitud incorrecta, si la petición a la API no se completa o si ocurre una excepción.</response>
+        /// <response code="500">Error interno del servidor, si ocurre un error inesperado.</response>
+
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] string latitudLogitud)
         {
@@ -58,6 +68,5 @@ namespace Tarea6Pweb.Controllers
             
             }
         }
-
     }
 }

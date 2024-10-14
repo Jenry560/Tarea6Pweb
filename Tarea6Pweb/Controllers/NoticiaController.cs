@@ -13,11 +13,24 @@ namespace Tarea6Pweb.Controllers
     {
         private readonly HttpClient _httpClient;
 
+        /// <summary>
+        /// Data de la noticia .
+        /// </summary>
         public NoticiaController(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
-
+        /// <summary>
+        /// Obtiene una lista de noticias filtradas por el término "migración", incluyendo el título y un pequeño resumen.
+        /// Realiza una solicitud a una API externa para recuperar los datos.
+        /// </summary>
+        /// <returns>
+        /// Un objeto <see cref="IActionResult"/> que contiene una lista de noticias con sus títulos y resúmenes,
+        /// junto con un estado de éxito o error.
+        /// </returns>
+        /// <response code="200">Retorna una lista de noticias obtenidas con éxito.</response>
+        /// <response code="400">Solicitud incorrecta, cuando ocurre un error al realizar la petición a la API externa o al procesar los datos.</response>
+        /// <response code="500">Error interno del servidor, si ocurre una excepción no controlada.</response>
         [HttpGet]
         public async Task<IActionResult> GetNoticia()
         {
